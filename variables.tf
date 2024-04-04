@@ -89,6 +89,12 @@ variable "function_version_tag" {
   default     = ""
 }
 
+variable "base_function_version_tag" {
+  description = "The version tag for the base function used on first deploy."
+  type        = string
+  default     = "b0.1.4"
+}
+
 variable "regional_vpc_connector_ids" {
   description = "A map of regional VPC connector IDs."
   type        = map(string)

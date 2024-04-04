@@ -12,7 +12,7 @@ data "google_storage_bucket" "base_template_bucket" {
 }
 
 data "google_storage_bucket_object" "base_template_code" {
-  name   = "base-fn-b0.1.3.zip"
+  name   = "base-fn-${var.base_function_version_tag}.zip"
   bucket = data.google_storage_bucket.base_template_bucket.name
 }
 

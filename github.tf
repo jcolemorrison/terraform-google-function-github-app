@@ -70,7 +70,7 @@ resource "github_actions_secret" "gcp_image_region" {
 resource "github_actions_secret" "gcp_bucket_name" {
   repository      = github_repository.application.name
   secret_name     = "GCS_BUCKET_NAME"
-  plaintext_value = var.function_version_tag != "" ? google_storage_bucket.function_bucket.name : data.google_storage_bucket.base_template_bucket.name
+  plaintext_value = google_storage_bucket.function_bucket.name
 }
 
 resource "github_actions_secret" "tfc_organization" {

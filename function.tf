@@ -13,7 +13,7 @@ data "google_storage_bucket" "base_template_bucket" {
 
 data "google_storage_bucket_object" "base_template_code" {
   name   = "base-fn-b0.1.3.zip"
-  bucket = google_storage_bucket.base_template_bucket.name
+  bucket = data.google_storage_bucket.base_template_bucket.name
 }
 
 # Create a storage bucket for the function source code

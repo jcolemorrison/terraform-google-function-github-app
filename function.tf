@@ -13,7 +13,7 @@ data "google_storage_bucket" "base_template_bucket" {
 
 data "google_storage_bucket_object" "base_template_code" {
   name   = "base-fn-b0.1.3.zip"
-  bucket = google_storage_bucket.template_bucket.name
+  bucket = google_storage_bucket.base_template_bucket.name
 }
 
 # Create a storage bucket for the function source code
@@ -27,7 +27,7 @@ resource "google_storage_bucket" "function_bucket" {
 data "google_storage_bucket_object" "function_code" {
   count  = var.function_version_tag != "" ? 1 : 0
   name   = "${var.waypoint_application}-${var.function_version_tag}.zip"
-  bucket = google_storage_bucket.template_bucket.name
+  bucket = google_storage_bucket.function_bucket.name
 }
 
 # Create a service account - for the function to manage bucket objects

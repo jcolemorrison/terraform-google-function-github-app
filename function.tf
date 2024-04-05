@@ -1,7 +1,7 @@
 locals {
   run_env_vars = {
     for region in var.deployment_regions : region => merge(var.function_env_variables, {
-        "REDIS_HOST" = "${var.redis_read_endpoints[region]}:6379"
+      "REDIS_HOST" = "${var.redis_read_endpoints[region]}:6379"
     })
   }
 }
@@ -21,6 +21,7 @@ resource "google_storage_bucket" "function_bucket" {
   name                        = "${var.waypoint_application}-fn-source"
   location                    = "US"
   uniform_bucket_level_access = true
+  force_destroy               = true
 }
 
 # Grab the function code from the main function bucket if version tag specified
@@ -59,9 +60,9 @@ resource "google_cloudfunctions2_function" "function" {
   location = var.deployment_regions[count.index]
 
   build_config {
-    runtime = "nodejs20"
+    runtime               = "nodejs20"
     environment_variables = local.run_env_vars[var.deployment_regions[count.index]]
-    entry_point = "main"
+    entry_point           = "main"
 
     source {
       storage_source {
@@ -76,7 +77,7 @@ resource "google_cloudfunctions2_function" "function" {
     vpc_connector_egress_settings = "ALL_TRAFFIC"
     ingress_settings              = "ALLOW_ALL"
     service_account_email         = var.function_version_tag != "" ? google_service_account.function_bucket.email : var.function_service_account_email
-    environment_variables = local.run_env_vars[var.deployment_regions[count.index]]
+    environment_variables         = local.run_env_vars[var.deployment_regions[count.index]]
   }
 }
 

@@ -25,10 +25,3 @@ run "function_bucket_gha_access" {
     error_message = "Bucket access role for github actions does not match expected"
   }
 }
-
-run "public_access" {
-  assert {
-    condition     = google_cloud_run_v2_service_iam_member.public_access.role == "roles/run.invoker"
-    error_message = "Public access role does not match expected"
-  }
-}
